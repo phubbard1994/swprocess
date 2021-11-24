@@ -860,3 +860,28 @@ class Array1DwSource(Array1D):
             sensors.append(sensor)
 
         self.sensors = sensors
+
+    def RespaceSensors(self, dx_initial, dx_target):
+        initialmat = self.timeseriesmatrix
+        respacemat = signal.resample_poly(initialmat, dx_target*100, dx_initial*100, 0)
+        ref_sensor = self.sensors[0]
+
+        sensors = []
+
+        for i in range(respacemat.shape[0]):
+            sensor = Sensor1C(respacemat[i, :], dt=dx_target,
+                              x=ref_sensors.x + i*dx_target, y=ref_sensors.y, z=ref_sensors.z,
+                              nstacks= ref_sensor.nstacks, delay=0)
+            sensors.append(sensor)
+            
+        self.sensors = sensors
+
+
+
+
+
+
+
+
+
+      
